@@ -3,10 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-const fakeUser = {
-  email: 'broken@arrow.com',
-  password: 'Nucflash'
-};
+jest.mock('../lib/utils/github');
 
 describe('backend routes', () => {
   beforeEach(() => {
@@ -17,13 +14,12 @@ describe('backend routes', () => {
     pool.end();
   });
 
-  it('Users can sign up using their Github account', () => {
+  it('Users can sign up using their Github account', async () => {
   // a get request that redirects user to github sign in
-  // gets back code to user for request to user info?
-  // 
+    const req = await request(app).get('/api/v1/github/login');
+    // but that github sign in is mocked?
+    // looks like...
+    expect(req.header.location).toMatch(/https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=http:\/\/localhost:7890\/api\/v1\/github\/login\/callback/i);
   });
-
-
-
 
 });
