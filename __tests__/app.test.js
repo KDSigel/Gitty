@@ -29,14 +29,14 @@ describe('backend routes', () => {
       .agent(app)
       .get('/api/v1/github/login/callback?code=8675309')
       .redirects(1);
-    // run to my get route for github login callback with mock code.
-    // post code + other stuff to https://github.com/login/oauth/access_token
-    // get back token
-    // use token and send back to GET https://api.github.com/user using Authorization: token OAUTH-TOKEN
-    // get user info from github
-    // what do I want the user to see?
 
-    // expect that user is at '/api/v1/github/dashboard'
-    expect(req.header.location).toMatch(/http:\/\/localhost:7890\/api\/v1\/github\/dashboard/i);
+    expect(req.body).toEqual(
+      // user info + session info
+    );
   });
+
+  // test for user being able to add a post
+
+  // test for user seeing all posts
+
 });
