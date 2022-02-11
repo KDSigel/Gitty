@@ -14,7 +14,7 @@ describe('backend routes', () => {
     pool.end();
   });
 
-  it('Users can sign up using their Github account', async () => {
+  it('should redirect to the github oauth page upon login', async () => {
   // a get request that redirects user to github sign in
     const req = await request(app).get('/api/v1/github/login');
     // but that github sign in is mocked?
