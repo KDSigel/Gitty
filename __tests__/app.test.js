@@ -22,4 +22,12 @@ describe('backend routes', () => {
     expect(req.header.location).toMatch(/https:\/\/github.com\/login\/oauth\/authorize\?client_id=[\w\d]+&scope=user&redirect_uri=http:\/\/localhost:7890\/api\/v1\/github\/login\/callback/i);
   });
 
+  it('should log the user in with github credentials', async () => {
+    // get code from callback url
+    // post code + other stuff to https://github.com/login/oauth/access_token
+    // get back token
+    // use token and send back to GET https://api.github.com/user using Authorization: token OAUTH-TOKEN 
+    // get user info from github 
+  });
+
 });
