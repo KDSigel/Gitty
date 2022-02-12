@@ -37,10 +37,14 @@ describe('backend routes', () => {
       iat: expect.any(Number),
       exp: expect.any(Number),
     });
+
+    it('logs out a user', async () => {
+      const req = await request.delete('/api/v1/github');
+      expect(req.body.message).toEqual('bye bye');
+    });
   });
 
   // test for user being able to add a post
 
   // test for user seeing all posts
-
 });
