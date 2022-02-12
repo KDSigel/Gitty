@@ -3,7 +3,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-// jest.mock('../lib/utils/github');
+jest.mock('../lib/utils/github');
 
 describe('backend routes', () => {
   beforeEach(() => {
@@ -30,9 +30,13 @@ describe('backend routes', () => {
       .get('/api/v1/github/login/callback?code=8675309')
       .redirects(1);
 
-    expect(req.body).toEqual(
-      // user info + session info
-    );
+    expect(req.body).toEqual({
+      id: expect.any(String),
+      username: 'mr_cool',
+      email: 'karl@karl.com',
+      iat: expect.any(Number),
+      exp: expect.any(Number),
+    });
   });
 
   // test for user being able to add a post
