@@ -45,7 +45,14 @@ describe('backend routes', () => {
     expect(req.body.message).toEqual('bye bye');
   });
 
-  // test for user being able to add a post
+  it('lets a user make a post', async () => {
+    await request.agent(app).get('/api/v1/github/login');
+    const newPost = await request.agent(app).post('/api/v1/posts').send({ post: 'oooogah' });
+    expect(newPost).toEqual({
+      id: expect.any(String),
+      post: 'oooogah'
+    });
+  });
 
   // test for user seeing all posts
 });
