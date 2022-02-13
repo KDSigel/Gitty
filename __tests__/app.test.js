@@ -39,20 +39,23 @@ describe('backend routes', () => {
     });
   });
 
-  it('logs out a user', async () => {
-    await request.agent(app).get('/api/v1/github/login');
-    const req = await request.agent(app).delete('/api/v1/github');
-    expect(req.body.message).toEqual('bye bye');
-  });
-
   it('lets a user make a post', async () => {
-    await request.agent(app).get('/api/v1/github/login');
+
+    await request.agent(app).get('/api/v1/github/login/callback?code=8675309');
+
     const newPost = await request.agent(app).post('/api/v1/posts').send({ post: 'oooogah' });
-    expect(newPost).toEqual({
+
+    expect(newPost.body).toEqual({
       id: expect.any(String),
       post: 'oooogah'
     });
   });
 
   // test for user seeing all posts
+
+  it('logs out a user', async () => {
+    await request.agent(app).get('/api/v1/github/login');
+    const req = await request.agent(app).delete('/api/v1/github');
+    expect(req.body.message).toEqual('bye bye');
+  });
 });
