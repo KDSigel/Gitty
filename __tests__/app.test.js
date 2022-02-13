@@ -2,6 +2,8 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const GithubUser = require('../lib/models/GithubUser');
+const { agent } = require('superagent');
 
 jest.mock('../lib/utils/github');
 
@@ -42,6 +44,13 @@ describe('backend routes', () => {
   it('lets a user make a post', async () => {
 
     await request.agent(app).get('/api/v1/github/login/callback?code=8675309');
+    // console.log(testuser.body);
+
+    // const testuser = await GithubUser.insert({
+    //   username: 'mr_cool',
+    //   email: 'karl@karl.com'
+    // });
+    // await request.agent(app).get('/api/v1/github/login/callback?code=8675309').send({ ...testuser });
 
     const newPost = await request.agent(app).post('/api/v1/posts').send({ post: 'oooogah' });
 
