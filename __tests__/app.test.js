@@ -41,18 +41,16 @@ describe('backend routes', () => {
     });
   });
 
+  it('logs out a user', async () => {
+    await request.agent(app).get('/api/v1/github/login');
+    const req = await request.agent(app).delete('/api/v1/github');
+    expect(req.body.message).toEqual('bye bye');
+  });
+
   it('lets a user make a post', async () => {
-
-    await request.agent(app).get('/api/v1/github/login/callback?code=8675309');
-    // console.log(testuser.body);
-
-    // const testuser = await GithubUser.insert({
-    //   username: 'mr_cool',
-    //   email: 'karl@karl.com'
-    // });
-    // await request.agent(app).get('/api/v1/github/login/callback?code=8675309').send({ ...testuser });
-
-    const newPost = await request.agent(app).post('/api/v1/posts').send({ post: 'oooogah' });
+    const agent = request.agent(app);
+    await agent.get('/api/v1/github/login/callback?code=8675309');
+    const newPost = await agent.post('/api/v1/posts').send({ post: 'oooogah' });
 
     expect(newPost.body).toEqual({
       id: expect.any(String),
@@ -60,11 +58,18 @@ describe('backend routes', () => {
     });
   });
 
-  // test for user seeing all posts
+  it('lets user see all posts', async () => {
 
-  it('logs out a user', async () => {
-    await request.agent(app).get('/api/v1/github/login');
-    const req = await request.agent(app).delete('/api/v1/github');
-    expect(req.body.message).toEqual('bye bye');
+    const agent = request.agent(app);
+    await agent.get('/api/v1/github/login/callback?code=8675309');
+
+    await agent.post('/api/v1/posts').send({ post: 'oooogah' });
+
+    const allPosts = await agent.get('/api/v1/posts');
+
+    expect(allPosts.body).toEqual({
+      post: 'oooogah'
+    });
   });
+
 });
