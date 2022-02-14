@@ -67,9 +67,10 @@ describe('backend routes', () => {
 
     const allPosts = await agent.get('/api/v1/posts');
 
-    expect(allPosts.body).toEqual({
+    expect(allPosts.body).toEqual([{
+      id: expect.any(String),
       post: 'oooogah'
-    });
+    }]);
   });
 
 });
